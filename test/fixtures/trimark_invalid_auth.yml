@@ -1,0 +1,14 @@
+"{
+  \"IsSuccess\":false,
+  \"Code\":0,
+  \"AccessToken\":null,
+  \"Message\":\"Invalid username or password.\",
+  \"Username\":null,
+  \"FullName\":null,
+  \"CompanyId\":0,
+  \"Company\":null,
+  \"AllowControls\":false,
+  \"Forecasting\":false,
+  \"IsTrimark\":false,
+  \"Companies\":[]
+}"

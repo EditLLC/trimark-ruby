@@ -1,0 +1,14 @@
+"{
+  \"IsSuccess\":true,
+  \"Code\":0,
+  \"AccessToken\":\"ACCESS_TOKEN\",
+  \"Message\":null,
+  \"Username\":\"Foo\",
+  \"FullName\":\"Bar\",
+  \"CompanyId\":-1,
+  \"Company\":\"DogeCorp\",
+  \"AllowControls\":true,
+  \"Forecasting\":true,
+  \"IsTrimark\":false,
+  \"Companies\":[]
+}"
