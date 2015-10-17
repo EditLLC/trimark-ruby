@@ -3,6 +3,7 @@ require 'json'
 require 'securerandom'
 require 'trimark/connection'
 require 'trimark/site'
+require 'addressable/template'
 
 module TriMark
   class AuthError < StandardError; end
@@ -40,24 +41,26 @@ module TriMark
       end
     end
 
-    def site_url(site_id)
+    def site_info_url(site_id)
       "company/#{company_id}/site/#{site_id}"
     end
 
-    def point_id_url(site_id, query_string)
-      "company/#{company_id}/site/#{site_id}/history/?#{query_string}"
+    def site_history_url(site_id, query_hash)
+      Addressable::Template.new(
+        "company/#{company_id}/site/#{site_id}/history/{?query*}"
+      ).expand(query_hash)
     end
 
     def url_picker(*args)
-      if args && args.length <= 2
-        args.length == 2 ? point_id_url(*args) : site_url(*args)
+      if args.length <= 2
+        args.length == 2 ? site_history_url(*args) : site_info_url(*args)
       else
-        p args
-        fail QueryError, 'Invalid / Too Many Arguments!'
+        fail QueryError, "#{args.length} Arguments Entered! Max 2"
       end
     end
 
     def query_headers
+      fail QueryError, 'Login to set access token!' if access_token.nil?
       {
         'Content-Type' => 'application/json',
         'access_token' => access_token,
@@ -65,13 +68,15 @@ module TriMark
       }
     end
 
-    # Returns site attributes and history data if an optional query_string is supplied
+    # Returns site attributes and history data if an optional query_hash is supplied
+    # @client.site_query(x) will return the attributes of site x
+    # @client.site_query(x, query_hash) will return historical data from site x instrumentation
     def site_query(*args)
-      response = (conn.get url_picker(*args), {}, query_headers).body
-      if response['Message'] || response == 'null'
-        fail QueryError,  "Query Failed! #{response}"
+      response = (conn.get url_picker(*args), {}, query_headers)
+      if response.body['SiteId'] || response.body['PointId']
+        return JSON.parse(response.body)
       else
-        return JSON.parse(response)
+        fail QueryError, "Query Failed! HTTPStatus: #{response.status}"
       end
     end
   end

@@ -1,14 +1,14 @@
 "{
-  \"IsSuccess\":false,
-  \"Code\":0,
+  \"IsSuccess\":\"ITEM\",
+  \"Code\":\"ITEM\",
   \"AccessToken\":null,
   \"Message\":\"Invalid username or password.\",
-  \"Username\":null,
-  \"FullName\":null,
-  \"CompanyId\":0,
-  \"Company\":null,
-  \"AllowControls\":false,
-  \"Forecasting\":false,
-  \"IsTrimark\":false,
-  \"Companies\":[]
+  \"Username\":\"ITEM\",
+  \"FullName\":\"ITEM\",
+  \"CompanyId\":\"ITEM\",
+  \"Company\":\"ITEM\",
+  \"AllowControls\":\"ITEM\",
+  \"Forecasting\":\"ITEM\",
+  \"IsTrimark\":\"ITEM\",
+  \"Companies\":\"ITEM\"
 }"

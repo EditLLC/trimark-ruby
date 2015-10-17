@@ -37,6 +37,15 @@ class ClientTest < Minitest::Test
         assert_equal 'uuddlrlrba', @client.access_token
       end
     end
+
+    describe '#company_id' do
+      it 'should accept a company id' do
+        @client = TriMark::Client.new do |c|
+          c.company_id = 0
+        end
+        assert_equal 0, @client.company_id
+      end
+    end
   end
 
   describe 'the authentication process' do
@@ -63,7 +72,8 @@ class ClientTest < Minitest::Test
       it 'should return a valid access token and assign it to the client instance' do
         valid_response = YAML.load_file('test/fixtures/trimark_valid_auth.yml')
         stub_request(:post, login_url).to_return(body: valid_response)
-        @client.login.wont_be_nil
+
+        @client.login.must_equal 'ACCESS_TOKEN'
         @client.access_token.must_equal 'ACCESS_TOKEN'
       end
     end
@@ -71,6 +81,15 @@ class ClientTest < Minitest::Test
 
   describe 'the site attribute and history query process' do
     site_info_url = 'https://vantage.trimarkassoc.com/api/company/1/site/1'
+
+    query_hash = {
+      query: {
+        beginDateTime: '2015-08-31 01:01',
+        endDateTime: '2015-09-01 01:01',
+        intervalType: 'Day',
+        pointIds: '39'
+      }
+    }
 
     before do
       @client = TriMark::Client.new do |c|
@@ -83,11 +102,43 @@ class ClientTest < Minitest::Test
     end
 
     describe '#site_query' do
-      it 'should raise a Trimark::QueryError' do
+      it 'should raise a Trimark::QueryError for invalid / unauthorized sites' do
         stub_request(:get, site_info_url).to_return(body: 'null')
         assert_raises(TriMark::QueryError) do
           @client.site_query(1)
         end
+      end
+
+      it 'should raise a Trimark::QueryError if the client hasnt logged in' do
+        @client.access_token = nil
+        stub_request(:get, site_info_url)
+        assert_raises(TriMark::QueryError) do
+          @client.site_query(1)
+        end
+      end
+
+      it 'should raise a Trimark::QueryError if too many arguments are passed in' do
+        stub_request(:get, site_info_url)
+        assert_raises(TriMark::QueryError) do
+          @client.site_query(1, 1, 1)
+        end
+      end
+
+      it 'should return site information for the specified site' do
+        valid_response = YAML.load_file('test/fixtures/trimark_valid_site_info.yml')
+        stub_request(:get, site_info_url).to_return(body: valid_response)
+
+        @client.site_query(1).must_include 'SiteId'
+      end
+
+      it 'should return site history information for the specified site' do
+        site_history_url = Addressable::Template.new(
+          site_info_url + '/history/{?query*}'
+        ).expand(query_hash)
+
+        valid_response = YAML.load_file('test/fixtures/trimark_valid_site_history.yml')
+        stub_request(:get, site_history_url).to_return(body: valid_response)
+        @client.site_query(1, query_hash).must_include 'PointId'
       end
     end
   end

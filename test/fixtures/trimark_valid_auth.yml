@@ -1,14 +1,14 @@
 "{
-  \"IsSuccess\":true,
-  \"Code\":0,
+  \"IsSuccess\":\"ITEM\",
+  \"Code\":\"ITEM\",
   \"AccessToken\":\"ACCESS_TOKEN\",
-  \"Message\":null,
+  \"Message\":\"ITEM\",
   \"Username\":\"Foo\",
   \"FullName\":\"Bar\",
-  \"CompanyId\":-1,
+  \"CompanyId\":\"ITEM\",
   \"Company\":\"DogeCorp\",
-  \"AllowControls\":true,
-  \"Forecasting\":true,
-  \"IsTrimark\":false,
-  \"Companies\":[]
+  \"AllowControls\":\"ITEM\",
+  \"Forecasting\":\"ITEM\",
+  \"IsTrimark\":\"ITEM\",
+  \"Companies\":\"ITEM\"
 }"

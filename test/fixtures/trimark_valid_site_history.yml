@@ -1,0 +1,26 @@
+"{
+  \"PointId\":\"ITEM\",
+  \"DisplayName\":\"NAME\",
+  \"Uom\":\"feet\",
+  \"PointValues\":
+  [
+    {
+      \"MaxValue\":\"ITEM\",
+      \"MinValue\":\"ITEM\",
+      \"AvgValue\":\"ITEM\",
+      \"SumValue\":\"ITEM\",
+      \"RollupValue\":\"ITEM\",
+      \"IntervalBeginTime\":\"TIMESTAMP\",
+      \"IntervalEndTime\":\"TIMESTAMP\"
+    },
+    {
+      \"MaxValue\":\"ITEM\",
+      \"MinValue\":\"ITEM\",
+      \"AvgValue\":\"ITEM\",
+      \"SumValue\":\"ITEM\",
+      \"RollupValue\":\"ITEM\",
+      \"IntervalBeginTime\":\"TIMESTAMP\",
+      \"IntervalEndTime\":\"TIMESTAMP\"
+    }
+  ]
+}"
