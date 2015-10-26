@@ -37,6 +37,7 @@ module TriMark
       if response['AccessToken'].nil?
         fail AuthError, "Login Failed! #{response['Message']}"
       else
+        self.company_id = response['CompanyId']
         self.access_token = response['AccessToken']
       end
     end
