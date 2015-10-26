@@ -76,6 +76,14 @@ class ClientTest < Minitest::Test
         @client.login.must_equal 'ACCESS_TOKEN'
         @client.access_token.must_equal 'ACCESS_TOKEN'
       end
+
+      it 'should set the company id on successful login' do
+        valid_response = YAML.load_file('test/fixtures/trimark_valid_auth.yml')
+        stub_request(:post, login_url).to_return(body: valid_response)
+
+        @client.login.must_equal 'ACCESS_TOKEN'
+        @client.company_id.must_equal 'FOO'
+      end
     end
   end
 
