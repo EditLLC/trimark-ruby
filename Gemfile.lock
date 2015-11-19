@@ -1,7 +1,8 @@
 PATH
   remote: .
   specs:
-    trimark (0.1.0)
+    trimark (0.1.1)
+      addressable
       faraday
       json
       virtus
@@ -58,13 +59,10 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (~> 1.10)
+  bundler (~> 1.9.5)
   minitest
   minitest-reporters
   pry
   rake (~> 10.0)
   trimark!
   webmock
-
-BUNDLED WITH
-   1.10.6
