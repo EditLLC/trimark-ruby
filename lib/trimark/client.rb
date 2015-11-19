@@ -79,11 +79,9 @@ module Trimark
       response = conn.get("#{base_url}/site", {}, query_headers)            
       body = JSON.parse(response.body)
 
-      if body.is_a?(Array)
-        body.map { |b| Site.new(b) } 
-      else
-        fail QueryError, "Query Failed! HTTPStatus: #{response.status} - Response: #{body}"
-      end
+      body.map { |b| Site.new(b) } 
+    rescue JSON::ParserError
+      fail QueryError, "Query Failed! HTTPStatus: #{response.status} - Response: #{body}"
     end
 
     # Returns site attributes and history data if an optional query_hash is supplied

@@ -124,7 +124,11 @@ class ClientTest < Minitest::Test
 
     describe 'when the query is not successful' do
       it 'should raise an exception'  do
-        
+        stub_request(:get, site_url).to_return(body: 'null')
+
+        assert_raises(Trimark::QueryError) do
+          @client.sites
+        end    
       end
     end
   end
