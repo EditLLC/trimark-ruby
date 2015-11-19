@@ -5,7 +5,7 @@ require 'trimark/connection'
 require 'trimark/site'
 require 'addressable/template'
 
-module TriMark
+module Trimark
   class AuthError < StandardError; end
   class QueryError < StandardError; end
 
@@ -42,13 +42,17 @@ module TriMark
       end
     end
 
+    def base_url
+      "company/#{company_id}" 
+    end
+
     def site_info_url(site_id)
-      "company/#{company_id}/site/#{site_id}"
+      "#{base_url}/site/#{site_id}"
     end
 
     def site_history_url(site_id, query_hash)
       Addressable::Template.new(
-        "company/#{company_id}/site/#{site_id}/history/{?query*}"
+        "#{site_info_url(site_id)}/history/{?query*}"
       ).expand(query_hash)
     end
 
@@ -69,13 +73,27 @@ module TriMark
       }
     end
 
+    # Gets a list of all the sites for the company
+    #
+    def sites
+      response = conn.get("#{base_url}/site", {}, query_headers)            
+      body = JSON.parse(response.body)
+
+      if body.is_a?(Array)
+        body.map { |b| Site.new(b) } 
+      else
+        fail QueryError, "Query Failed! HTTPStatus: #{response.status} - Response: #{body}"
+      end
+    end
+
     # Returns site attributes and history data if an optional query_hash is supplied
     # @client.site_query(x) will return the attributes of site x
     # @client.site_query(x, query_hash) will return historical data from site x instrumentation
     def site_query(*args)
-      response = (conn.get url_picker(*args), {}, query_headers)
+      response = conn.get(url_picker(*args), {}, query_headers)
+
       if response.body['SiteId'] || response.body['PointId']
-        return JSON.parse(response.body)
+        JSON.parse(response.body)
       else
         fail QueryError, "Query Failed! HTTPStatus: #{response.status}"
       end
