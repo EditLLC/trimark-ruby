@@ -1,4 +1,4 @@
-module TriMark
+module Trimark
   class AuthError < StandardError; end
   class QueryError < StandardError; end
 
@@ -18,7 +18,7 @@ module TriMark
     attribute :location, String
 
     def initialize(params = {})
-      super(params)
+      super(Trimark.symbolize_keys(params))
     end
   end
 end
