@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    trimark (0.1.1)
+    trimark (0.1.2)
       addressable
       faraday
       json
