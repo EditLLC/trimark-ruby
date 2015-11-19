@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_development_dependency "bundler", "~> 1.10"
+  spec.add_development_dependency "bundler", "~> 1.9.5"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "minitest"
   spec.add_development_dependency "minitest-reporters"
@@ -29,6 +29,4 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'json'
   spec.add_runtime_dependency 'virtus'
   spec.add_runtime_dependency 'addressable'
-
-
 end
