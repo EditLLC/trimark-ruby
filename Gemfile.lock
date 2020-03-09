@@ -41,7 +41,7 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
-    rake (10.4.2)
+    rake (13.0.1)
     ruby-progressbar (1.7.5)
     safe_yaml (1.0.4)
     slop (3.6.0)
@@ -63,6 +63,6 @@ DEPENDENCIES
   minitest
   minitest-reporters
   pry
-  rake (~> 10.0)
+  rake (~> 13.0)
   trimark!
   webmock
